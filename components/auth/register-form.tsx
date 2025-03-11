@@ -36,11 +36,15 @@ export const RegisterForm = () => {
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError('');
     setSuccess('');
-    startTransition(() => {
-      register(values).then((data) => {
-        setError(data.error);
+    startTransition(async () => {
+      try {
+        const data = await register(values); // Ensure the function properly resolves
+        setError(data?.error);
         setSuccess(data?.success);
-      });
+      } catch (err) {
+        setError('Something went wrong');
+        console.error(err);
+      }
     });
   };
   return (
@@ -64,6 +68,7 @@ export const RegisterForm = () => {
                       {...field}
                       placeholder='Jon Doe'
                       disabled={isPending}
+                      autoComplete='on'
                     />
                   </FormControl>
                   <FormMessage />
@@ -82,6 +87,7 @@ export const RegisterForm = () => {
                       placeholder='JonDoe@example.com'
                       type='email'
                       disabled={isPending}
+                      autoComplete='on'
                     />
                   </FormControl>
                   <FormMessage />
@@ -100,6 +106,7 @@ export const RegisterForm = () => {
                       placeholder='******'
                       type='password'
                       disabled={isPending}
+                      autoComplete='on'
                     />
                   </FormControl>
                   <FormMessage />
