@@ -1,17 +1,12 @@
 'use client';
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Header } from '@/components/auth/header';
 import { Social } from '@/components/auth/social';
 import { BackButton } from '@/components/auth/back-button';
-import { Button } from '../ui/button';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
+// import { Button } from '../ui/button';
+// import { FcGoogle } from 'react-icons/fc';
+// import { FaGithub } from 'react-icons/fa';
 
 interface CardWrapperProps {
   children: React.ReactNode;
