@@ -12,6 +12,7 @@ declare module 'next-auth' {
   interface Session {
     user: {
       /** The user's postal address. */
+      id: string;
       role: UserRole;
       address: string;
       /**
@@ -26,12 +27,19 @@ declare module 'next-auth' {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
-    async jwt({ token, user }) {
-      if (!token.sub) return token;
-      const existingUser = await getUserById(token.sub);
-      if (!existingUser) return token;
-      token.role = existingUser.role;
-      return token;
+    async signIn({ user, account }) {
+      const { id } = user;
+      if (!id) return false;
+
+      if (account?.provider !== 'credentilas') {
+        return true;
+      }
+      const existingUser = await getUserById(id);
+
+      // if (!existingUser || !existingUser.emailVerified) {
+      //   return false;
+      // }
+      return true;
     },
     async session({ token, session }) {
       if (session.user) {
@@ -44,6 +52,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       return session;
+    },
+    async jwt({ token, user }) {
+      if (!token.sub) return token;
+      const existingUser = await getUserById(token.sub);
+      if (!existingUser) return token;
+      token.role = existingUser.role;
+      return token;
     },
   },
   adapter: PrismaAdapter(db),
