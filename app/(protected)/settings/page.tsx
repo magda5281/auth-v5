@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 
 const page = async () => {
   const session = await auth();
+
   return (
     <div>
       {JSON.stringify(session)}
