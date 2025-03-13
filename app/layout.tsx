@@ -31,7 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className='font-sans'>{children}</body>
+      <body className='font-sans' data-turbo-suppress-warning>
+        {children}
+      </body>
     </html>
   );
 }

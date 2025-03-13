@@ -6,7 +6,7 @@ import {
   authRoutes,
   publicRoutes,
 } from '@/routes';
-import { redirect } from 'next/dist/server/api-utils';
+
 //all app needs to be protected by default
 
 const { auth } = NextAuth(authConfig);
