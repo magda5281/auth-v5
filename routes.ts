@@ -19,7 +19,7 @@ export const authRoutes = [
 
 /**
  * The prefix for API authentication routes
- * Routes that atart with this prefix are used for API authentication purposes
+ * Routes that start with this prefix are used for API authentication purposes
  * @type {string}
  */
 export const apiAuthPrefix = '/api/auth';
