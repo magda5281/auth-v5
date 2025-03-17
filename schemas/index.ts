@@ -5,6 +5,13 @@ export const ResetSchema = z.object({
     .string({ invalid_type_error: 'Must be a string' })
     .email({ message: 'Must be a valid email' }),
 });
+
+export const NewPasswordSchema = z.object({
+  password: z.string().min(6, {
+    message: 'Minimum 6 characters required',
+  }),
+});
+
 export const LoginSchema = z.object({
   email: z
     .string({ invalid_type_error: 'Must be a string' })
