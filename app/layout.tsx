@@ -32,14 +32,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+
   return (
-    <SessionProvider session={session}>
-      {' '}
-      <html lang='en'>
+    <html lang='en'>
+      <SessionProvider session={session}>
         <body className='font-sans' data-turbo-suppress-warning>
           {children}
         </body>
-      </html>
-    </SessionProvider>
+      </SessionProvider>
+    </html>
   );
 }
