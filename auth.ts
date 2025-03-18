@@ -52,7 +52,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!existingUser || !existingUser.emailVerified) {
         return false;
       }
-      // TODO: Add 2FA check
+
       if (existingUser.isTowFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           existingUser.id
