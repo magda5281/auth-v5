@@ -1,6 +1,5 @@
 'use client';
 import { logout } from '@/actions/logout';
-import { Button } from '@/components/ui/button';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 
 const SettingsPage = () => {
@@ -10,10 +9,14 @@ const SettingsPage = () => {
     logout();
   };
   return (
-    <div>
-      <Button type='submit' onClick={onClick}>
+    <div className=' bg-white p-10 rounded-xl'>
+      <button
+        className='cursor-pointer bg-white text-black'
+        type='submit'
+        onClick={onClick}
+      >
         Sign out
-      </Button>
+      </button>
     </div>
   );
 };
