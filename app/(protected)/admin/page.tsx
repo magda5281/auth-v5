@@ -1,9 +1,7 @@
-'use client';
-
-import { useCurrentRole } from '@/hooks/useCurrentRole';
+import { currentRole } from '@/lib/auth';
 
 const AdminPage = () => {
-  const role = useCurrentRole();
+  const role = currentRole();
   return <div>Current role: {role}</div>;
 };
 
