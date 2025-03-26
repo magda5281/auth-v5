@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Poppins } from 'next/font/google';
 import './globals.css';
 import { auth } from '@/auth';
 import { SessionProvider } from 'next-auth/react';
+import { Toaster } from '@/components/ui/sonner';
 
 // Load Poppins font
 const poppins = Poppins({
@@ -37,6 +38,7 @@ export default async function RootLayout({
     <html lang='en'>
       <SessionProvider session={session}>
         <body className='font-sans' data-turbo-suppress-warning>
+          <Toaster />
           {children}
         </body>
       </SessionProvider>
