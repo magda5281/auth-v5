@@ -6,26 +6,6 @@ import { getUserById } from './data/user';
 import { UserRole } from '@prisma/client';
 import { getTwoFactorConfirmationByUserId } from '@/data/two-factor-confirmation';
 
-declare module 'next-auth' {
-  /**
-   * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  interface Session {
-    user: {
-      /** The user's postal address. */
-      id: string;
-      role: UserRole;
-      address: string;
-      /**
-       * By default, TypeScript merges new interface properties and overwrites existing ones.
-       * In this case, the default session user properties will be overwritten,
-       * with the new ones defined above. To keep the default session user properties,
-       * you need to add them back into the newly declared interface.
-       */
-    } & DefaultSession['user'];
-  }
-}
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: '/auth/login',
@@ -53,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return false;
       }
 
-      if (existingUser.isTowFactorEnabled) {
+      if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           existingUser.id
         );
@@ -74,6 +54,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (token.role) {
           session.user.role = token.role as UserRole;
         }
+        if (token.isTwoFactorEnabled) {
+          session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+        }
       }
 
       return session;
@@ -82,7 +65,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
+
       token.role = existingUser.role;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       return token;
     },
   },
