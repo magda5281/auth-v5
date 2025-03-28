@@ -24,4 +24,5 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     where: { id: dbUser.id },
     data: { ...values },
   });
+  return { success: 'Settings updated' };
 };
