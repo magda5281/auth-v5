@@ -30,8 +30,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { Switch } from '@radix-ui/react-switch';
 import { UserRole } from '@prisma/client';
+import { Switch } from '@/components/ui/switch';
 
 const SettingsPage = () => {
   const user = useCurrentUser();
@@ -45,8 +45,8 @@ const SettingsPage = () => {
     defaultValues: {
       name: user?.name || undefined,
       email: user?.email || undefined,
-      password: undefined,
-      newPassword: undefined,
+      password: '',
+      newPassword: '',
       role: user?.role || undefined,
     },
   });
@@ -186,7 +186,6 @@ const SettingsPage = () => {
                         Enable two factor authentication for yor account
                       </FormDescription>
                     </div>
-
                     <FormControl>
                       <Switch
                         checked={field.value}
