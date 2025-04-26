@@ -64,11 +64,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (token.email) {
           session.user.email = token.email;
         }
-        if (token.isOAuth) {
-          session.user.isOAuth = token.isOAuth as boolean;
-        }
-      }
 
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
       return session;
     },
     async jwt({ token, user }) {
@@ -77,7 +75,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!existingUser) return token;
 
       const existingAccount = await getAccountByUserId(existingUser.id);
-
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
