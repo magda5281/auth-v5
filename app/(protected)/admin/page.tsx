@@ -7,24 +7,27 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { UserRole } from '@prisma/client';
 import { toast } from 'sonner';
 const AdminPage = () => {
-  const onServerActionClick = () => {
-    admin().then((data) => {
-      if (data.error) {
-        toast.error(data.error, { richColors: true });
-      }
-      if (data.success) {
-        toast.success(data.success, { richColors: true });
-      }
-    });
+  const onServerActionClick = async () => {
+    try {
+      const data = await admin();
+      if (data.error) toast.error(data.error, { richColors: true });
+      if (data.success) toast.success(data.success, { richColors: true });
+    } catch (error) {
+      toast.error('An error occurred', { richColors: true });
+    }
   };
   const onApiRouteClick = () => {
-    fetch('/api/admin').then((response) => {
-      if (response.ok) {
-        toast.success('Allowed API route!', { richColors: true });
-      } else {
-        toast.error('Forbidden API route', { richColors: true });
-      }
-    });
+    try {
+      fetch('/api/admin').then((response) => {
+        if (response.ok) {
+          toast.success('Allowed API route!', { richColors: true });
+        } else {
+          toast.error('Forbidden API route', { richColors: true });
+        }
+      });
+    } catch (error) {
+      toast.error('Network error', { richColors: true });
+    }
   };
   return (
     <Card className='w-full max-w-[600px]'>
