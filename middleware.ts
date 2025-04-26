@@ -1,5 +1,6 @@
 import authConfig from '@/auth.config';
 import NextAuth from 'next-auth';
+
 import {
   DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
@@ -12,6 +13,7 @@ import {
 const { auth } = NextAuth(authConfig);
 export default auth((req) => {
   const { nextUrl } = req;
+  console.log('******nextUrl', nextUrl);
   const isLoggedIn = !!req.auth;
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
@@ -19,19 +21,26 @@ export default auth((req) => {
 
   // the order of the check matters !
   if (isApiAuthRoute) {
-    return null;
+    return undefined;
   }
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
-    return null;
+    return undefined;
   }
 
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL('auth/login', nextUrl.origin));
+    let callbackUrl = nextUrl.pathname;
+    if (nextUrl.search) {
+      callbackUrl += nextUrl.search;
+    }
+    const encodedCallbackUrl = encodeURIComponent(callbackUrl);
+    return Response.redirect(
+      new URL(`auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl.origin)
+    );
   }
-  return null;
+  return undefined;
 });
 
 export const config = {
