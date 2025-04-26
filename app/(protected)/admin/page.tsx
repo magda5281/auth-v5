@@ -26,7 +26,7 @@ const AdminPage = () => {
         }
       });
     } catch (error) {
-      toast.error('Network error', { richColors: true });
+      toast.error(`Network error:${error}`, { richColors: true });
     }
   };
   return (
