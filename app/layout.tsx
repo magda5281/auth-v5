@@ -23,7 +23,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-
+  console.log('test');
   return (
     <html lang='en' className={poppins.variable}>
       <SessionProvider session={session}>
