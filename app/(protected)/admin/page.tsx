@@ -12,7 +12,7 @@ const AdminPage = () => {
       const data = await admin();
       if (data.error) toast.error(data.error, { richColors: true });
       if (data.success) toast.success(data.success, { richColors: true });
-    } catch (error) {
+    } catch {
       toast.error('An error occurred', { richColors: true });
     }
   };
@@ -25,8 +25,8 @@ const AdminPage = () => {
           toast.error('Forbidden API route', { richColors: true });
         }
       });
-    } catch (error) {
-      toast.error(`Network error:${error}`, { richColors: true });
+    } catch {
+      toast.error('Network error', { richColors: true });
     }
   };
   return (
