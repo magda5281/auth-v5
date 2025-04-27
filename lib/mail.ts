@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const domain = process.env.NEXT_PUBLIC_APP_URL;
-const fromEmail = process.env.NEXT_PUBLIC_APP_EMAIL || 'onboarding@resend.dev';
+const fromEmail = 'mail@herdevlab.co.uk';
 export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   await resend.emails.send({
     from: fromEmail,
