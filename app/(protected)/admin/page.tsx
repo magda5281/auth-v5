@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { UserRole } from '@prisma/client';
 import { toast } from 'sonner';
+
 const AdminPage = () => {
   const onServerActionClick = async () => {
     try {
