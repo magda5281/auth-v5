@@ -60,7 +60,20 @@ export const LoginForm = () => {
             setShowTwoFactor(true);
           }
         })
-        .catch(() => setError('something went wrong'));
+        .catch((err) => {
+          if (
+            err instanceof Error &&
+            // Internally Next throws a RedirectError whose
+            // message starts with "NEXT_REDIRECT"
+            err.message.startsWith('NEXT_REDIRECT')
+          ) {
+            // swallow it—Next will handle the navigation
+            return;
+          }
+
+          // 2) Anything else is a real failure:
+          setError('Something went wrong');
+        });
     });
   };
   return (
